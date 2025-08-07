@@ -7,7 +7,10 @@
     <style>
       .deleted {
         text-decoration: line-through;
-        color: rgb(240, 18, 18);
+        color: rgb(20, 20, 20);
+      }
+      .buttonx {
+        background-color: red;
       }
     </style>
   </head>
@@ -26,30 +29,49 @@
   </body>
 
   <script>
-    const aggiungiText = document.getElementById("aggiungiObiettivi"); // variabile collegata all'id input
-    console.dir(aggiungiText);
-    const click = document.getElementById("btn1"); //variabile collegata all id bottone
-    console.dir(click);
-    const testo = document.getElementById("testoObiettivi"); // variabile collegata all id lista(ul)
-    console.dir(testo);
-    click.addEventListener("click", function () //
+    const input = document.getElementById("aggiungiObiettivi"); // variabile collegata all'id input
+    console.dir(input);
+    const btn1 = document.getElementById("btn1"); //variabile collegata all id bottone
+    console.dir(btn1);
+    const list = document.getElementById("testoObiettivi"); // variabile collegata all id lista(ul)
+    console.dir(list);
+
+    btn1.addEventListener("click", function () //nuovo evento (addEvenListener) associato a clcik (bottone)
     {
-      const valore = aggiungiText.value;
+      const valore = input.value; //creo la variabile (il mio input.value) dove salvo il testo scritto
       if (valore !== "") {
-        const nuovoTesto = document.createElement("li");
+        //se valore è diverso da "" allora..
+        const li = document.createElement("li");
         const checkbox = document.createElement("input");
         checkbox.type = "checkbox";
-        const label = document.createElement("label");
-        label.textContent = valore;
+        const span = document.createElement("span"); //span(ovunque)
+        span.textContent = valore; //metto il testo all'interno del valore
 
-        checkbox.addEventListener("change", function () //nuovo evento associato a checkbox(change)
-        {
-          label.classList.toggle("deleted", checkbox.checked);
+        checkbox.addEventListener("change", function () {
+          //nuovo evento associato a checkbox(change)
+          console.log(checkbox.checked);
+
+          if (checkbox.checked) {
+            span.classList.add("deleted"); //se la mia checkbox è spuntata allora (---)
+          } else {
+            span.classList.remove("deleted");
+          }
         });
-        nuovoTesto.appendChild(label);
-        nuovoTesto.appendChild(checkbox);
-        testo.appendChild(nuovoTesto);
-        aggiungiText.value = "";
+        const deleteBtn = document.createElement("button"); //creo il mio "bottone"
+        deleteBtn.textContent = "x"; //contenuto
+        deleteBtn.classList.add("buttonx"); //css
+
+        deleteBtn.addEventListener("click", () =>
+          //creo l'evento da eseguire
+          {
+            li.remove(); //rimuovere dal momento in cui fai "click" l'li
+          }
+        );
+        li.appendChild(span); //li>testo(span)
+        li.appendChild(checkbox); //li>
+        li.appendChild(deleteBtn); //cancella i li
+        list.appendChild(li); //ul>li
+        input.value = "";
       }
     });
   </script>
